@@ -7,7 +7,7 @@ public class Installment {
 	private BigDecimal amountLeft;
 	private BigDecimal capital;
 	private BigDecimal interest;
-
+	
 	public Installment(Short month, BigDecimal capital, BigDecimal interest) {
 		this.setMonth(month);
 		this.setCapital(capital);
