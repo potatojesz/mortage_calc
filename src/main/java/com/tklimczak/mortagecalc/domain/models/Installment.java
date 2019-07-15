@@ -5,13 +5,14 @@ import java.math.BigDecimal;
 public class Installment {
 	private Short month;
 	private BigDecimal amountLeft;
-	private BigDecimal capital;
-	private BigDecimal interest;
+	private BigDecimal capitalPart;
+	private BigDecimal interestPart;
 	
-	public Installment(Short month, BigDecimal capital, BigDecimal interest) {
+	public Installment(Short month, BigDecimal capitalPart, BigDecimal interestPart, BigDecimal amountLeft) {
 		this.setMonth(month);
-		this.setCapital(capital);
-		this.setInterest(interest);
+		this.setCapitalPart(capitalPart);
+		this.setInterestPart(interestPart);
+		this.setAmountLeft(amountLeft);
 	}
 
 	public Short getMonth() {
@@ -22,21 +23,21 @@ public class Installment {
 	}
 
 	public BigDecimal getAmount() {
-		return getCapital().add(getInterest());
+		return getCapitalPart().add(getInterestPart());
 	}
 
-	public BigDecimal getCapital() {
-		return capital;
+	public BigDecimal getCapitalPart() {
+		return capitalPart;
 	}
-	public void setCapital(BigDecimal capital) {
-		this.capital = capital;
+	public void setCapitalPart(BigDecimal capitalPart) {
+		this.capitalPart = capitalPart;
 	}
 
-	public BigDecimal getInterest() {
-		return interest;
+	public BigDecimal getInterestPart() {
+		return interestPart;
 	}
-	public void setInterest(BigDecimal interest) {
-		this.interest = interest;
+	public void setInterestPart(BigDecimal interestPart) {
+		this.interestPart = interestPart;
 	}
 
 	public BigDecimal getAmountLeft() {
@@ -44,5 +45,9 @@ public class Installment {
 	}
 	public void setAmountLeft(BigDecimal amountLeft) {
 		this.amountLeft = amountLeft;
+	}
+
+	public BigDecimal getWhole() {
+		return capitalPart.add(interestPart);
 	}
 }

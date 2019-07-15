@@ -1,44 +1,39 @@
 package com.tklimczak.mortagecalc.domain.models;
 
+import com.tklimczak.mortagecalc.domain.enums.OverpaymentPeriod;
+import com.tklimczak.mortagecalc.domain.enums.OverpaymentType;
+
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Overpayment {
-	private Mortage mortage;
-	private List<Installment> installments;
-	private BigDecimal interestSaving;
-	private Short newMonths;
+    private OverpaymentType type;
+    private OverpaymentPeriod period;
+    private BigDecimal overpayAmount;
 
-	public Overpayment(Mortage mortage, List<Installment> installments) {
-		this.mortage = mortage;
-		this.installments = installments;
-	}
-	
-	public Mortage getMortage() {
-		return mortage;
-	}
-	public void setMortage(Mortage mortage) {
-		this.mortage = mortage;
-	}
+    public Overpayment(OverpaymentType type, OverpaymentPeriod period, BigDecimal overpayAmount) {
+        this.type = type;
+        this.period = period;
+        this.overpayAmount = overpayAmount;
+    }
 
-	public List<Installment> getInstallments() {
-		return installments;
-	}
-	public void setInstallments(List<Installment> installments) {
-		this.installments = installments;
-	}
+    public OverpaymentType getType() {
+        return type;
+    }
+    public void setType(OverpaymentType type) {
+        this.type = type;
+    }
 
-	public BigDecimal getInterestSaving() {
-		return interestSaving;
-	}
-	public void setInterestSaving(BigDecimal interestSaving) {
-		this.interestSaving = interestSaving;
-	}
+    public OverpaymentPeriod getPeriod() {
+        return period;
+    }
+    public void setPeriod(OverpaymentPeriod period) {
+        this.period = period;
+    }
 
-	public Short getNewMonths() {
-		return newMonths;
-	}
-	public void setNewMonths(Short newMonths) {
-		this.newMonths = newMonths;
-	}
+    public BigDecimal getOverpayAmount() {
+        return overpayAmount;
+    }
+    public void setOverpayAmount(BigDecimal overpayAmount) {
+        this.overpayAmount = overpayAmount;
+    }
 }

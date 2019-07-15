@@ -44,4 +44,19 @@ public class Mortage {
 	public void setMonths(Short months) {
 		this.months = months;
 	}
+
+	public void validate() throws IllegalArgumentException {
+		if(getMonths() == null || getAmount() == null || getInterest() == null || getType() == null) {
+			throw new NullPointerException("Mortage with null values is not applicable");
+		}
+		if(getMonths() <= 0) {
+			throw new IllegalArgumentException("Mortage should be at least 1 month long!");
+		}
+		if(getAmount().signum() <= 0) {
+			throw new IllegalArgumentException("Mortage amount can't be less than 0!");
+		}
+		if(getInterest().signum() < 0) {
+			throw new IllegalArgumentException("Mortage interest rate can't be less than 0!");
+		}
+	}
 }
