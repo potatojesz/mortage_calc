@@ -46,8 +46,10 @@ API is documented by SWAGGER2 Library available at [https://mortage-calc.herokua
 **body**
 ```json
 {
-    "cardNumber": "0000000000000000",
-    "pin": "0000"
+  "amount": 250000,
+  "interest": 3.79,
+  "months": 360,
+  "type": "CONSTANT_INSTALLMENT"
 }
 ```
 
@@ -55,10 +57,37 @@ API is documented by SWAGGER2 Library available at [https://mortage-calc.herokua
 
 ```json
 {
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMDAwMDAwMDAwMDAwMDAwIiwiaWF0IjoxN...",
-    "tokenType": "Bearer",
-    "number": "0000000000000000"
+  "installments": [
+    {
+      "month": 1,
+      "amountLeft": 250000,
+      "capitalPart": 373.89,
+      "interestPart": 789.58,
+      "overpayPart": 0,
+      "whole": 1163.47
+    },
+    {
+      "month": 2,
+      "amountLeft": 249626.11,
+      "capitalPart": 375.07,
+      "interestPart": 788.4,
+      "overpayPart": 0,
+      "whole": 1163.47
+    },
+	{
+		.....
+	}
+  ],
+  "interestsSum": 168849.37,
+  "mortage": {
+    "type": "CONSTANT_INSTALLMENT",
+    "interest": 3.79,
+    "amount": 250000,
+    "months": 360
+  }
 }
+	
+	
 ```
 ---
 
@@ -72,8 +101,17 @@ API is documented by SWAGGER2 Library available at [https://mortage-calc.herokua
 **body**
 ```json
 {
-    "cardNumber": "0000000000000000",
-    "pin": "0000"
+  "mortage": {
+    "amount": 250000,
+    "interest": 3.79,
+    "months": 360,
+    "type": "CONSTANT_INSTALLMENT"
+  },
+  "overpayment": {
+    "overpayAmount": 1000,
+    "period": "MONTHLY",
+    "type": "SHORTER_PERIOD"
+  }
 }
 ```
 
@@ -81,9 +119,40 @@ API is documented by SWAGGER2 Library available at [https://mortage-calc.herokua
 
 ```json
 {
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIwMDAwMDAwMDAwMDAwMDAwIiwiaWF0IjoxN...",
-    "tokenType": "Bearer",
-    "number": "0000000000000000"
+  "mortage": {
+    "type": "CONSTANT_INSTALLMENT",
+    "interest": 3.79,
+    "amount": 250000,
+    "months": 360
+  },
+  "overpayment": {
+    "type": "SHORTER_PERIOD",
+    "period": "MONTHLY",
+    "overpayAmount": 1000
+  },
+  "installments": [
+    {
+      "month": 1,
+      "amountLeft": 250000,
+      "capitalPart": 373.89,
+      "interestPart": 789.58,
+      "overpayPart": 1000,
+      "whole": 2163.47
+    },
+    {
+      "month": 2,
+      "amountLeft": 248626.11,
+      "capitalPart": 373.57,
+      "interestPart": 785.24,
+      "overpayPart": 1000,
+      "whole": 2158.81
+    },
+	{
+		......
+	}
+  ],
+  "interest": 75308.74,
+  "newMonths": 199
 }
 ```
 ---
