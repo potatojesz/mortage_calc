@@ -91,7 +91,8 @@ public class OverpaymentCalculatorServiceTest {
         Assert.assertTrue(result.getNewMonths() == 168);
         Assert.assertNotNull(result.getInstallments());
         Assert.assertTrue(result.getInstallments().size() > 0);
-        Assert.assertTrue(result.getInterest().setScale(0, RoundingMode.HALF_DOWN).compareTo(new BigDecimal("67108")) == 0);
+        System.out.println(result.getInterest());
+        Assert.assertTrue(result.getInterest().setScale(0, RoundingMode.HALF_DOWN).compareTo(new BigDecimal("67026")) == 0);
 
         final Installment installment = result.getInstallments().get(11);
         Assert.assertTrue(installment.getWhole().setScale(0,RoundingMode.HALF_DOWN).compareTo(new BigDecimal("16163")) == 0);

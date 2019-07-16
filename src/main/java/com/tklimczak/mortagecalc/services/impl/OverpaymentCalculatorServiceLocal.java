@@ -44,8 +44,8 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
         final BigDecimal interest = mortage.getInterest();
         final BigDecimal amount = mortage.getAmount();
         final BigDecimal factorInterest = FinancialUtils.calculateInterestFactor(interest);
-        final BigDecimal overpay = overpayment.getOverpayAmount();
 
+        BigDecimal overpay = overpayment.getOverpayAmount();
         BigDecimal amountLeft = amount;
         short month = 1;
 
@@ -57,8 +57,15 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
             BigDecimal wholeInstallment = calculateWholeInstallment(overpay, amountLeft, annuity, interestInstallmentPart);
             BigDecimal capitalInstallmentPart = amountLeft.compareTo(overpay) == 0 ? BigDecimal.ZERO :
                     wholeInstallment.subtract(interestInstallmentPart).subtract(overpay).setScale(2, RMU);
-            if(month == mortage.getMonths()) {
+            if(capitalInstallmentPart.signum() < 0) {
+                capitalInstallmentPart = BigDecimal.ZERO;
+            }
+            if(capitalInstallmentPart.compareTo(amountLeft) > 0) {
                 capitalInstallmentPart = amountLeft;
+            } else {
+                if(capitalInstallmentPart.add(overpay).compareTo(amountLeft) > 0) {
+                    overpay = amountLeft.subtract(capitalInstallmentPart);
+                }
             }
             Installment installment = new Installment(month, capitalInstallmentPart, interestInstallmentPart, amountLeft,
                     shouldOverpay(overpaymentMonts, month) ? overpay : null);
@@ -109,11 +116,11 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
         final BigDecimal interest = mortage.getInterest();
         final BigDecimal amount = mortage.getAmount();
         final BigDecimal factorInterest = FinancialUtils.calculateInterestFactor(interest);
-        final BigDecimal overpay = overpayment.getOverpayAmount();
         final BigDecimal annuity = FinancialUtils.calculateAnnuity(factorInterest, mortage.getMonths(), amount, BigDecimal.ZERO, false)
                 .setScale(2, RMU)
                 .negate();
 
+        BigDecimal overpay = overpayment.getOverpayAmount();
         BigDecimal amountLeft = amount;
         short month = 1;
 
@@ -121,8 +128,12 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
             BigDecimal interestInstallmentPart = amountLeft.multiply(factorInterest).setScale(2, RMD);
             BigDecimal wholeInstallment = annuity.compareTo(amountLeft.add(interestInstallmentPart)) > 0 ? amountLeft.add(interestInstallmentPart) : annuity.setScale(2, RMD);
             BigDecimal capitalInstallmentPart = wholeInstallment.subtract(interestInstallmentPart).setScale(2, RMU);
-            if(month == mortage.getMonths()) {
+            if(capitalInstallmentPart.compareTo(amountLeft) > 0) {
                 capitalInstallmentPart = amountLeft;
+            } else {
+                if(capitalInstallmentPart.add(overpay).compareTo(amountLeft) > 0) {
+                    overpay = amountLeft.subtract(capitalInstallmentPart);
+                }
             }
             Installment installment = new Installment(month, capitalInstallmentPart, interestInstallmentPart, amountLeft,
                     shouldOverpay(overpaymentMonts, month) ? overpay : null);

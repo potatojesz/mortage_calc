@@ -1,6 +1,6 @@
 package com.tklimczak.mortagecalc.domain.models;
 
-public class CalculationRequest {
+public class OverpaymentRequest {
 	private Mortage mortage;
 	private Overpayment overpayment;
 

@@ -7,7 +7,7 @@ public class Installment {
 	private BigDecimal amountLeft;
 	private BigDecimal capitalPart;
 	private BigDecimal interestPart;
-	private BigDecimal overpayPart;
+	private BigDecimal overpayPart = BigDecimal.ZERO;
 
 	public Installment(Short month, BigDecimal capitalPart, BigDecimal interestPart, BigDecimal amountLeft) {
 		this.setMonth(month);
@@ -29,10 +29,6 @@ public class Installment {
 	}
 	public void setMonth(Short month) {
 		this.month = month;
-	}
-
-	public BigDecimal getAmount() {
-		return getCapitalPart().add(getInterestPart());
 	}
 
 	public BigDecimal getCapitalPart() {
