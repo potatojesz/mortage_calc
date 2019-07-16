@@ -2,6 +2,7 @@ package com.tklimczak.mortagecalc;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,5 +33,25 @@ public class FinancialUtilsTest {
                 .negate();
         Assert.assertNotNull(pmt);
         Assert.assertTrue(pmt.setScale(0, RoundingMode.HALF_DOWN).compareTo(new BigDecimal("477")) == 0);
+    }
+   
+    @Test(expected = NullPointerException.class)
+    public void wholeInterestExceptionTest() {
+        FinancialUtils.calculateInterests(null);
+    }
+
+    @Test
+    public void wholeInterestEmptyTest() {
+        Assert.assertTrue(FinancialUtils.calculateInterests(new ArrayList<>()).signum() == 0);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void wholeCapitalExceptionTest() {
+    	FinancialUtils.calculateCapitalPaid(null);
+    }
+
+    @Test
+    public void wholeCapitalEmptyTest() {
+        Assert.assertTrue(FinancialUtils.calculateCapitalPaid(new ArrayList<>()).signum() == 0);
     }
 }

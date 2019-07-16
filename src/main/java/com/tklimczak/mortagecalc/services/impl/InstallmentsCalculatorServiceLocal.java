@@ -44,22 +44,6 @@ public class InstallmentsCalculatorServiceLocal implements InstallmentsCalculato
             amountLeft = amountLeft.subtract(capitalInstallmentPart);
         }
 
-        return new MortageResult(installments, calculateInterests(installments), mortage);
-    }
-
-    @Override
-    public BigDecimal calculateInterests(List<Installment> installments) {
-        if(installments.size() == 0) {
-            return BigDecimal.ZERO;
-        }
-        return installments.stream().map(i -> i.getInterestPart()).reduce((i, j) -> i.add(j)).get();
-    }
-
-    @Override
-    public BigDecimal calculateCapitalPaid(List<Installment> installments) {
-        if(installments.size() == 0) {
-            return BigDecimal.ZERO;
-        }
-        return installments.stream().map(i -> i.getCapitalPart()).reduce((i, j) -> i.add(j)).get();
+        return new MortageResult(installments, FinancialUtils.calculateInterests(installments), mortage);
     }
 }

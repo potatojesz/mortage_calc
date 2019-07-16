@@ -16,6 +16,7 @@ import com.tklimczak.mortagecalc.domain.models.Mortage;
 import com.tklimczak.mortagecalc.domain.models.MortageResult;
 import com.tklimczak.mortagecalc.services.InstallmentsCalculatorService;
 import com.tklimczak.mortagecalc.services.impl.InstallmentsCalculatorServiceLocal;
+import com.tklimczak.mortagecalc.services.utils.FinancialUtils;
 
 public class InstallmentsCalculatorServiceTest {
     public transient InstallmentsCalculatorService installmentsService;
@@ -25,26 +26,6 @@ public class InstallmentsCalculatorServiceTest {
     public void prepareData() {
         installmentsService = new InstallmentsCalculatorServiceLocal();
         mortage = new Mortage(MortageType.CONSTANT_INSTALLMENT, new BigDecimal("3.79"), new BigDecimal("250000"), (short)360);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void wholeInterestExceptionTest() {
-        installmentsService.calculateInterests(null);
-    }
-
-    @Test
-    public void wholeInterestEmptyTest() {
-        Assert.assertTrue(installmentsService.calculateInterests(new ArrayList<>()).signum() == 0);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void wholeCapitalExceptionTest() {
-        installmentsService.calculateCapitalPaid(null);
-    }
-
-    @Test
-    public void wholeCapitalEmptyTest() {
-        Assert.assertTrue(installmentsService.calculateCapitalPaid(new ArrayList<>()).signum() == 0);
     }
 
     @Test
@@ -71,7 +52,7 @@ public class InstallmentsCalculatorServiceTest {
         Assert.assertNotNull(wholeInterests);
         Assert.assertTrue(wholeInterests.setScale(0, RoundingMode.HALF_DOWN).compareTo(new BigDecimal("168849")) == 0);
 
-        BigDecimal wholeCapital = installmentsService.calculateCapitalPaid(calculatedInstallment);
+        BigDecimal wholeCapital = FinancialUtils.calculateCapitalPaid(calculatedInstallment);
         Assert.assertNotNull(wholeCapital);
         Assert.assertTrue(wholeCapital.setScale(0, RoundingMode.HALF_DOWN).compareTo(new BigDecimal("250000")) == 0);
     }

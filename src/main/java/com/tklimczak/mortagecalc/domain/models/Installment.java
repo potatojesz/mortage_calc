@@ -7,13 +7,22 @@ public class Installment {
 	private BigDecimal amountLeft;
 	private BigDecimal capitalPart;
 	private BigDecimal interestPart;
-	
+	private BigDecimal overpayPart;
+
 	public Installment(Short month, BigDecimal capitalPart, BigDecimal interestPart, BigDecimal amountLeft) {
 		this.setMonth(month);
 		this.setCapitalPart(capitalPart);
 		this.setInterestPart(interestPart);
 		this.setAmountLeft(amountLeft);
 	}
+
+    public Installment(Short month, BigDecimal capitalPart, BigDecimal interestPart, BigDecimal amountLeft, BigDecimal overpayPart) {
+        this.setMonth(month);
+        this.setCapitalPart(capitalPart);
+        this.setInterestPart(interestPart);
+        this.setAmountLeft(amountLeft);
+        this.setOverpayPart(overpayPart == null ? BigDecimal.ZERO : overpayPart);
+    }
 
 	public Short getMonth() {
 		return month;
@@ -48,6 +57,13 @@ public class Installment {
 	}
 
 	public BigDecimal getWhole() {
-		return capitalPart.add(interestPart);
+		return capitalPart.add(interestPart).add(overpayPart);
 	}
+
+    public BigDecimal getOverpayPart() {
+        return overpayPart;
+    }
+    public void setOverpayPart(BigDecimal overpayPart) {
+        this.overpayPart = overpayPart;
+    }
 }
