@@ -1,5 +1,7 @@
 package com.tklimczak.mortagecalc.controllers;
 
+import com.tklimczak.mortagecalc.domain.models.Mortage;
+import com.tklimczak.mortagecalc.domain.models.MortageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,5 +31,11 @@ public class MortageCalculatorController {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(overpaymentService.calculate(request.getOverpayment(), request.getMortage()));
+	}
+
+	@CrossOrigin
+	@PostMapping
+	ResponseEntity<MortageResult> calculateMortage(@RequestBody Mortage mortage) {
+		return ResponseEntity.ok(installmentsService.calculateInstallments(mortage));
 	}
 }
