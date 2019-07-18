@@ -37,6 +37,9 @@ public class MortageCalculatorController {
 	@CrossOrigin
 	@PostMapping("/calc")
 	ResponseEntity<MortageResult> calculateMortage(@RequestBody Mortage mortage) {
+		if(mortage.getType() == null || mortage.getAmount() == null || mortage.getInterest() == null || mortage.getMonths() == null) {
+			return ResponseEntity.badRequest().build();
+		}
 		final MortageResult result = installmentsService.calculateInstallments(mortage);
 		return ResponseEntity.ok(result);
 	}
