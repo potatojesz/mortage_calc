@@ -35,8 +35,7 @@ public class OverpaymentCalculatorServiceTest {
     }
 
     @Test
-    public void calculateMonthlyOverpaymentLesserInstallmentsTest() throws IllegalArgumentException {
-        overpayment.setType(OverpaymentType.LESSER_INSTALLMENTS);
+    public void calculateMonthlyOverpaymentShorterPeriodTest() throws IllegalArgumentException {
         OverpaymentResult result = service.calculate(overpayment, mortage);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.getNewMonths() == 144);
@@ -50,8 +49,7 @@ public class OverpaymentCalculatorServiceTest {
     }
 
     @Test
-    public void calculateYearlyOverpaymentLesserInstallmentsTest() throws IllegalArgumentException {
-        overpayment.setType(OverpaymentType.LESSER_INSTALLMENTS);
+    public void calculateYearlyOverpaymentShorterPeriodTest() throws IllegalArgumentException {
         overpayment.setPeriod(OverpaymentPeriod.YEARLY);
         overpayment.setOverpayAmount(new BigDecimal("12000"));
 
@@ -68,7 +66,8 @@ public class OverpaymentCalculatorServiceTest {
     }
 
     @Test
-    public void calculateMonthlyOverpaymentShorterPeriodTest() throws IllegalArgumentException {
+    public void calculateMonthlyOverpaymentLesserInstallmentsTest() throws IllegalArgumentException {
+        overpayment.setType(OverpaymentType.LESSER_INSTALLMENTS);
         OverpaymentResult result = service.calculate(overpayment, mortage);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.getNewMonths() == 199);
@@ -82,7 +81,8 @@ public class OverpaymentCalculatorServiceTest {
     }
 
     @Test
-    public void calculateYearlyOverpaymentShorterPeriodTest() throws IllegalArgumentException {
+    public void calculateYearlyOverpaymentLesserInstallmentsTest() throws IllegalArgumentException {
+        overpayment.setType(OverpaymentType.LESSER_INSTALLMENTS);
         overpayment.setPeriod(OverpaymentPeriod.YEARLY);
         overpayment.setOverpayAmount(new BigDecimal("15000"));
 

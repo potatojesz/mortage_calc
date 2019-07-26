@@ -36,7 +36,7 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
 		}
 	}
 
-    private OverpaymentResult shorterPeriodCalculate(Overpayment overpayment, Mortage mortage, Set<Short> overpaymentMonts) throws IllegalArgumentException {
+    private OverpaymentResult lesserInstallmentCalculate(Overpayment overpayment, Mortage mortage, Set<Short> overpaymentMonts) throws IllegalArgumentException {
         mortage.validate();
         List<Installment> installments = new ArrayList<Installment>(mortage.getMonths());
         final RoundingMode RMD = RoundingMode.HALF_DOWN;
@@ -108,7 +108,7 @@ public class OverpaymentCalculatorServiceLocal implements OverpaymentCalculatorS
         return wholeInstallment;
     }
 
-    private OverpaymentResult lesserInstallmentCalculate(Overpayment overpayment, Mortage mortage, Set<Short> overpaymentMonts) throws IllegalArgumentException {
+    private OverpaymentResult shorterPeriodCalculate(Overpayment overpayment, Mortage mortage, Set<Short> overpaymentMonts) throws IllegalArgumentException {
         mortage.validate();
         List<Installment> installments = new ArrayList<Installment>(mortage.getMonths());
         final RoundingMode RMD = RoundingMode.HALF_DOWN;
