@@ -52,5 +52,17 @@ public class OverpaymentResult {
 	public void setOverpayment(Overpayment overpayment) {
 		this.overpayment = overpayment;
 	}
+
+	public BigDecimal getWholeSum() {
+		if(installments != null && installments.size() > 0) {
+			BigDecimal sum = BigDecimal.ZERO;
+			for(Installment installment : installments) {
+				sum = sum.add(installment.getWhole());
+			}
+			return sum;
+		} else {
+			return BigDecimal.ZERO;
+		}
+	}
 }
 

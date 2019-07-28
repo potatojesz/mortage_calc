@@ -1,0 +1,150 @@
+<zk>
+    <window id="win" width="100%" height="100%" title="Kalkulator kredytowy" border="normal" apply="com.tklimczak.mortagecalc.zk.MortageCalculationComposer">
+        <radiogroup id="installmentTypeRadiogroup" />
+        <radiogroup id="overpaymentTypeRadiogroup" />
+        <radiogroup id="overpaymentPeriodRadiogroup" />
+        <borderlayout>
+            <north size="50%">
+                <borderlayout>
+                    <west title="Parametry kredytu" size="50%" autoscroll="true">
+                        <grid vflex="true">
+                            <columns>
+                                <column width="160px" />
+                                <column />
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Kwota" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <decimalbox id="dbxAmount" width="200px" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Oprocentowanie" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <decimalbox id="dbxInterest" width="50px" />
+                                            <label value="%" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Typ raty" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <radio id="radioConstant" label="Stała" radiogroup="installmentTypeRadiogroup" />
+                                            <radio id="radioDeclining" label="Malejąca" disabled="true" radiogroup="installmentTypeRadiogroup" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Ilość rat" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <intbox id="ibxMonths" width="50px" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row spans="2">
+                                    <div style="text-align: center;">
+                                        <button id="execMortage" label="Oblicz" width="300px" />
+                                    </div>
+                                </row>
+                            </rows>
+                        </grid>
+                    </west>
+                    <east title="Parametry nadpłaty" size="50%" autoscroll="true">
+                        <grid vflex="true">
+                            <columns>
+                                <column width="160px" />
+                                <column />
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Kwota nadpłaty" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <decimalbox id="dbxAmountOverpay" width="200px" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Typ nadpłaty" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <radio id="radioLesser" label="Mniejsza rata" radiogroup="overpaymentTypeRadiogroup" />
+                                            <radio id="radioShorter" label="Krótszy okres" radiogroup="overpaymentTypeRadiogroup" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Co ile" width="150px" />
+                                    <hlayout>
+                                        <div style="text-align: left; float: left;">
+                                            <radio id="radioMonthly" label="Miesiąc" radiogroup="overpaymentPeriodRadiogroup" />
+                                            <radio id="radioYearly" label="Rok" radiogroup="overpaymentPeriodRadiogroup" />
+                                        </div>
+                                    </hlayout>
+                                </row>
+                                <row spans="2">
+                                    <div style="text-align: center;">
+                                        <button id="execOverpayment" label="Oblicz" width="300px" />
+                                    </div>
+                                </row>
+                            </rows>
+                        </grid>
+                    </east>
+                </borderlayout>
+            </north>
+            <center>
+                <borderlayout>
+                    <west title="Harmonogram spłat" size="50%" autoscroll="true">
+                        <listbox id="installmentsListbox" vflex="true">
+                            <listhead>
+                                <listheader label="Miesiąc"/>
+                                <listheader label="Kwota"/>
+                                <listheader label="Kapitał"/>
+                                <listheader label="Odsetki"/>
+                                <listheader label="Pozostało"/>
+                            </listhead>
+                            <listfoot>
+                                <listfooter><label id="mortageMonthsSum" value="0"/></listfooter>
+                                <listfooter><label id="mortageWholeSum" value="0"/></listfooter>
+                                <listfooter/>
+                                <listfooter><label id="mortageInterestSum" value="0"/></listfooter>
+                                <listfooter/>
+                            </listfoot>
+                        </listbox>
+                    </west>
+                    <east title="Harmonogram nadpłat" size="50%" autoscroll="true">
+                        <listbox id="overpaymentListbox" vflex="true">
+                            <listhead>
+                                <listheader label="Miesiąc"/>
+                                <listheader label="Kwota"/>
+                                <listheader label="Kapitał"/>
+                                <listheader label="Odsetki"/>
+                                <listheader label="Nadpłata"/>
+                                <listheader label="Pozostało"/>
+                            </listhead>
+                            <listfoot>
+                                <listfooter><label id="overpayMonthsSum" value="0"/></listfooter>
+                                <listfooter><label id="overpayWholeSum" value="0"/></listfooter>
+                                <listfooter/>
+                                <listfooter><label id="overpayInterestSum" value="0"/></listfooter>
+                                <listfooter/>
+                                <listfooter/>
+                            </listfoot>
+                        </listbox>
+                    </east>
+                </borderlayout>
+            </center>
+            <south size="5%">
+                <div style="text-align: center">
+                    <a href="https://github.com/potatojesz" label="author: Tomasz Klimczak" style="font-size: 10px" />
+                </div>
+            </south>
+        </borderlayout>
+    </window>
+</zk>

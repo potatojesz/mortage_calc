@@ -34,4 +34,16 @@ public class MortageResult {
     public void setMortage(Mortage mortage) {
         this.mortage = mortage;
     }
+
+    public BigDecimal getWholeSum() {
+        if(installments != null && installments.size() > 0) {
+            BigDecimal sum = BigDecimal.ZERO;
+            for(Installment installment : installments) {
+                sum = sum.add(installment.getWhole());
+            }
+            return sum;
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
 }
