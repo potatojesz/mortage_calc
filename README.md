@@ -1,6 +1,6 @@
 ## Mortage calculator
 
-Backend REST Mortage and mortage overpay calculator
+Backend REST Mortage and mortage overpay calculator with ZK interface
 
 ## Prerequisites
 
